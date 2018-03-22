@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+def cfg = rootProject.ext.android
+def appId = rootProject.ext.appId
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        applicationId appId["app"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    dexOptions {
+        jumboMode = true
+    }
+}
+/**
+ * 编译期组件隔离，运行期组件按需依赖
+ * mainModule需要跟cartModule,goodsModule,usersModule进行交互，所以在运行期添加了依赖
+ */
+if (!isModuleRun.toBoolean()) {
+    //获取当前运行的task
+    def tasks = project.gradle.startParameter.taskNames
+    for (String task : tasks) {
+        def upperName = task.toUpperCase()
+        //判断tack是编译期还是运行期
+        if (upperName.contains("ASSEMBLE") || upperName.contains("INSTALL")) {
+            dependencies.add("compile", project.project(':' + 'homemodule'))
+            dependencies.add("compile", project.project(':' + 'goodsmodule'))
+            dependencies.add("compile", project.project(':' + 'cartmodule'))
+            dependencies.add("compile", project.project(':' + 'usermodule'))
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':routermodule')
+}

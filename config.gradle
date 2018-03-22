@@ -1,0 +1,35 @@
+/**
+ * 在主项目的根目录下创建config.gradle文件
+ * 在这里单独处理统一依赖问题
+ * 注意需要在根目录的build.gradle中进行引入
+ */
+
+ext{
+
+    appId = [
+            "app" : "com.angle.hshb.androidcomponentdemo",
+            "home" : "com.angle.hshb.homemodule",
+            "goods" : "com.angle.hshb.goodsmodule",
+            "cart" : "com.angle.hshb.cartmodule",
+            "user" : "com.angle.hshb.usermodule"
+    ]
+    android = [
+            compileSdkVersion: 25,
+            minSdkVersion    : 16,
+            targetSdkVersion : 25,
+            buildToolsVersion: "25.0.2",
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+
+
+    //version
+    supportLibrary = "25.1.0"
+    dependencies = [
+            "multidex"     : "com.android.support:multidex:1.0.1",
+            "cardview"     : "com.android.support:cardview-v7:${supportLibrary}",
+            "constraint"   : "com.android.support.constraint:constraint-layout:1.0.2",
+            "recyclerview" : "com.android.support:recyclerview-v7:${supportLibrary}",
+            "suppoutDesign": "com.android.support:design:${supportLibrary}"
+    ]
+}

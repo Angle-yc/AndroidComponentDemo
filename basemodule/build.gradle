@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+
+/**
+ * 基础Module 各个Module之间公共的方法,资源
+ */
+def cfg = rootProject.ext.android
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile project(':librarymoudle')
+}

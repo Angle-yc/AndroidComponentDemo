@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+/**
+ * 路由Module  负责各个module之间的通信
+ */
+def cfg = rootProject.ext.android
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':basemodule')
+}
